@@ -8,6 +8,7 @@ interface ServerDetails {
   name: string;
   category: number;
   member: number[];
+  banner: Blob | null; // Use Blob type for banner
   owner: number;
   // Add other fields as needed
 }
@@ -22,6 +23,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
     name: "",
     category: 0,
     member: [],
+    banner: null,
     owner: 0,
     // Add other fields as needed
   });
@@ -42,13 +44,29 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
     }));
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setServerDetails((prevDetails) => ({
+        ...prevDetails,
+        banner: file,
+      }));
+    }
+  };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
+      const formData = new FormData();
+      formData.append("name", serverDetails.name);
+      formData.append("category", String(serverDetails.category));
+      formData.append("member", serverDetails.member.join(", "));
+      formData.append("owner", String(serverDetails.owner));
+      formData.append("banner", serverDetails.banner as Blob); // Make sure banner is a Blob type
+
       const response: AxiosResponse = await axios.post(
         "http://127.0.0.1:8000/api/server/",
-        serverDetails
+        formData
       );
 
       console.log("Server added successfully:", response.data);
@@ -63,16 +81,38 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
       );
     }
   };
+  // const handleSubmit = async (e: FormEvent) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     const response: AxiosResponse = await axios.post(
+  //       "http://127.0.0.1:8000/api/server/",
+  //       serverDetails
+  //     );
+
+  //     console.log("Server added successfully:", response.data);
+
+  //     handleClose();
+  //     onServerAdded(); // Notify the parent component about the server addition
+  //   } catch (error) {
+  //     const axiosError = error as AxiosError;
+  //     console.error(
+  //       "Error adding server:",
+  //       axiosError.response?.data || axiosError.message
+  //     );
+  //   }
+  // };
 
   return (
     <>
       <Tooltip title="Add Servers" arrow>
-        <AddCircle onClick={handleOpen}  sx={{ fontSize: 25 , color:'#fff'}} />
+        <AddCircle onClick={handleOpen} sx={{ fontSize: 25, color: "#fff" }} />
       </Tooltip>
 
       <Modal open={open} onClose={handleClose}>
         <div>
           <form
+            encType="multipart/form-data"
             className="container d-flex justify-content-center flex-column vh-100 w-50 my-5 bg-dark"
             onSubmit={handleSubmit}
           >
@@ -89,7 +129,6 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
                   margin: "10px",
                 },
               }}
-              
             />
             <TextField
               label="Category"
@@ -109,7 +148,6 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
                   color: "white", // Change the color of the label here
                 },
               }}
-            
             />
             <TextField
               label="Members"
@@ -125,6 +163,13 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
                 },
               }}
             />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ margin: "10px" }}
+            />
+
             <TextField
               label="Owner"
               name="owner"
@@ -143,7 +188,6 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
                   color: "aliceblue", // Change the color of the label here
                 },
               }}
-            
             />
             {/* Add other fields as needed */}
             <Button

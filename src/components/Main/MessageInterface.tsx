@@ -14,6 +14,10 @@ import Scroll from "./Scroll";
 import { useParams } from "react-router-dom";
 import { Server } from "../../@types/server.d";
 import useChatWebSocket from "../../services/chatService";
+import Picker from "emoji-picker-react";
+import { EmojiClickData } from "emoji-picker-react";
+import { useState } from "react";
+
 
 interface SendMessageData {
   type: string;
@@ -58,6 +62,15 @@ const messageInterface = (props: ServerChannelProps) => {
       message,
     } as SendMessageData);
   };
+
+  const [showEmojiPicker, setShowEmojiPicker] = useState<boolean>(false);
+    const onEmojiClick = (
+    emoji: EmojiClickData,
+    event: React.MouseEvent<Element, MouseEvent>
+  ) => {
+    setMessage((prevMessage) => prevMessage + emoji?.emoji);
+  };
+
 
   function formatTimeStamp(timestamp: string): string {
     const date = new Date(Date.parse(timestamp));
@@ -196,6 +209,26 @@ const messageInterface = (props: ServerChannelProps) => {
                   onChange={(e) => setMessage(e.target.value)}
                   sx={{ flexGrow: 1 }}
                 />
+                           <div
+              style={{
+                position: "absolute",
+                bottom: "25%",
+                right: 25,
+                zIndex: 2,
+                fontSize:'20px'
+              }}
+            >
+              {showEmojiPicker && (
+                <Picker  onEmojiClick={onEmojiClick as unknown as (emoji: EmojiClickData, event: MouseEvent) => void} />
+              )}
+              <button
+                type="button"
+                onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              >
+                {showEmojiPicker  ? "😊" : "😊"}
+              </button>
+            </div>
+
               </Box>
             </form>
           </Box>
@@ -221,8 +254,9 @@ export default messageInterface;
 // import { useParams } from "react-router-dom";
 // import { Server } from "../../@types/server.d";
 // import useChatWebSocket from "../../services/chatService";
-// import Picker from "emoji-picker-react";
 // import { useState } from "react";
+
+// import Picker from "emoji-picker-react";
 // import { EmojiClickData } from "emoji-picker-react";
 
 // interface SendMessageData {
