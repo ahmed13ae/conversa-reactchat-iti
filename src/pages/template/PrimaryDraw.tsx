@@ -75,7 +75,7 @@ const PrimaryDraw: React.FC<Props> = ({ children }) => {
           mt: `${theme.primaryAppBar.height}px`,
           height: `calc(100vh - ${theme.primaryAppBar.height}px )`,
           width: theme.primaryDraw.width,
-          backgroundColor:"#756298",
+          backgroundColor:"#5865F2",
         },
       }}
     >

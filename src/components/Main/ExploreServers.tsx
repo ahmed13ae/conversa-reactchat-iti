@@ -18,6 +18,7 @@ import useCrud from "../../hooks/useCrud";
 import { useEffect } from "react";
 import { MEDIA_URL } from "../../config";
 import { Link } from "react-router-dom";
+import AccountButton from "../PrimaryAppBar/AccountButton";
 
 interface Server {
   id: number;
@@ -41,6 +42,7 @@ const ExploreServers = () => {
 
   return (
     <>
+    <Box sx={{ height: "80vh", overflowY: "auto" }}>
       <Container maxWidth="lg">
         <Box sx={{ pt: 6 }}>
           <Typography
@@ -89,7 +91,7 @@ const ExploreServers = () => {
         </Typography>
         <Grid container spacing={{ xs: 0, sm: 2 }}>
           {dataCRUD.map((item) => (
-            <Grid item key={item.id} xs={12} sm={6} md={6} lg={3}>
+            <><Grid item key={item.id} xs={12} sm={6} md={6} lg={4}>
               <Card
                 sx={{
                   height: "100%",
@@ -106,14 +108,11 @@ const ExploreServers = () => {
                 >
                   <CardMedia
                     component="img"
-                    image={
-                      item.banner
-                        ? `${MEDIA_URL}${item.banner}`
-                        : "https://source.unsplash.com/random/"
-                    }
+                    image={item.banner
+                      ? `${MEDIA_URL}${item.banner}`
+                      : "https://source.unsplash.com/random/"}
                     alt="random"
-                    sx={{ display: { xs: "none", sm: "block" } }}
-                  />
+                    sx={{ display: { xs: "none", sm: "block", height: '280px', width: '300px', objectFit: "cover" } }} />
                   <CardContent
                     sx={{
                       flexGrow: 1,
@@ -128,39 +127,37 @@ const ExploreServers = () => {
                             <Avatar
                               alt="server Icon"
                               src={`${MEDIA_URL}${item.icon}`}
-                            />
+                              sx={{ height: '30px', width: '30px' }} />
                           </ListItemAvatar>
                         </ListItemIcon>
                         <ListItemText
-                          primary={
-                            <Typography
-                              variant="body2"
-                              textAlign="start"
-                              sx={{
-                                textOverflow: "ellipsis",
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                fontWeight: 700,
-                              }}
-                            >
-                              {item.name}
-                            </Typography>
-                          }
-                          secondary={
-                            <Typography variant="body2">
-                              {item.category}
-                            </Typography>
-                          }
-                        />
+                          primary={<Typography
+                            variant="body2"
+                            textAlign="start"
+                            sx={{
+                              textOverflow: "ellipsis",
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              fontWeight: 700,
+                            }}
+                          >
+                            {item.name}
+                          </Typography>}
+                          secondary={<Typography variant="body2">
+                            {item.category}
+                          </Typography>} />
                       </ListItem>
                     </List>
                   </CardContent>
                 </Link>
               </Card>
-            </Grid>
+            </Grid></>
+            
           ))}
         </Grid>
+        
       </Container>
+      </Box>
     </>
   );
 };

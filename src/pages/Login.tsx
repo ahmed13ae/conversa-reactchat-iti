@@ -1,7 +1,8 @@
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthServiceContext } from "../context/AuthContext";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import bg1 from "../../src/assets/bg1.png";
 
 const Login = () => {
   const { login } = useAuthServiceContext();
@@ -12,6 +13,7 @@ const Login = () => {
       password: "",
     },
     validate: (values) => {
+      0;
       const errors: Partial<typeof values> = {};
       if (!values.username) {
         errors.username = "Required";
@@ -31,66 +33,96 @@ const Login = () => {
           password: "Invalid username or password",
         });
       } else {
-        navigate("/");
+        navigate("/home");
       }
     },
   });
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Typography
-          variant="h5"
-          noWrap
-          component="h1"
-          sx={{
-            fontWeight: 500,
-            pb: 2,
-          }}
+    <>
+      <div className="img position-relative d-flex justify-content-center align-items-center">
+        <img
+          style={{ objectFit: "cover", height: "100vh", width: "100%" }}
+          src={bg1}
+          alt=""
+        />
+        <div
+          className="login_form position-absolute d-flex flex-column justify-content-center bg-dark p-3"
+          style={{ width: "43%", borderRadius: "30px" }}
         >
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
-          <TextField
-            autoFocus
-            fullWidth
-            id="username"
-            name="username"
-            label="username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            error={!!formik.touched.username && !!formik.errors.username}
-            helperText={formik.touched.username && formik.errors.username}
-          ></TextField>
-          <TextField
-            margin="normal"
-            fullWidth
-            id="password"
-            name="password"
-            type="password"
-            label="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={!!formik.touched.password && !!formik.errors.password}
-            helperText={formik.touched.password && formik.errors.password}
-          ></TextField>
-          <Button
-            variant="contained"
-            disableElevation
-            type="submit"
-            sx={{ mt: 1, mb: 2 }}
+          <h1
+            className="d-flex justify-content-center"
+            style={{
+              color: "#F2F3F5",
+              fontSize: "24px",
+              fontWeight: "600",
+              lineHeight: "30px",
+            }}
           >
-            Next
-          </Button>
-        </Box>
-      </Box>
-    </Container>
+            Welcome back!
+          </h1>
+          <span
+            className="d-flex justify-content-center"
+            style={{ color: "#B5BAC1", lineHeight: "20px", fontWeight: "400" }}
+          >
+            we're so excited to see you again!
+          </span>
+
+          <Container component="main" maxWidth="xs">
+            <Box>
+              <Box
+                component="form"
+                onSubmit={formik.handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  autoFocus
+                  fullWidth
+                  id="username"
+                  name="username"
+                  label="username"
+                  value={formik.values.username}
+                  onChange={formik.handleChange}
+                  error={!!formik.touched.username && !!formik.errors.username}
+                  helperText={formik.touched.username && formik.errors.username}
+                  InputProps={{
+                    style: { backgroundColor: "#1E1F22", borderRadius:'10px',color:'white' },
+                  }}
+                ></TextField>
+                <TextField
+                  margin="normal"
+                  fullWidth
+                  id="password"
+                  name="password"
+                  type="password"
+                  label="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  error={!!formik.touched.password && !!formik.errors.password}
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    style: { backgroundColor: "#1E1F22", borderRadius:'10px',color:'white' },
+                  }}
+                ></TextField>
+                <Button
+                  variant="contained"
+                  disableElevation
+                  type="submit"
+                  sx={{ mt: 1, mb: 2, width: "100%" }}
+                >
+                  Next
+                </Button>
+              </Box>
+              <span style={{ color: "#fff" }}>
+                Need an account?{" "}
+                <Link style={{ textDecoration: "none" }} to="/register">
+                  Register
+                </Link>
+              </span>
+            </Box>
+          </Container>
+        </div>
+      </div>
+    </>
   );
 };
 

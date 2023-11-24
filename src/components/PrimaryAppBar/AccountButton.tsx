@@ -1,6 +1,5 @@
 import { Box, IconButton, Menu, MenuItem } from "@mui/material";
-import { AccountCircle } from "@mui/icons-material";
-import DarkModeSwitch from "./DarkMode/DarkModeSwitch";
+import ModeNightIcon from '@mui/icons-material/ModeNight';import DarkModeSwitch from "./DarkMode/DarkModeSwitch";
 import { useState } from "react";
 
 const AccountButton = () => {
@@ -33,7 +32,7 @@ const AccountButton = () => {
   return (
     <Box sx={{ display: { xs: "flex" } }}>
       <IconButton edge="end" color="inherit" onClick={handleProfileMenuOpen}>
-        <AccountCircle />
+       < ModeNightIcon sx={{marginRight:'5px'}}  color="primary"/>
       </IconButton>
       {renderMenu}
     </Box>

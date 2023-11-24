@@ -1,14 +1,17 @@
 import useWebSocket from "react-use-websocket";
-import { useState } from "react";
+import { useState, KeyboardEvent,FormEvent } from "react";
 import { useAuthService } from "../services/AuthServices";
 import useCrud from "../hooks/useCrud";
 import { WS_ROOT } from "../config";
 import { Server } from "../@types/server"
 
+
 interface Message {
     sender: string;
     content: string;
     timestamp: string;
+    attachment?: string; // Assuming attachment is a URL or base64 data
+
   }
 
 const useChatWebSocket = (channelId: string, serverId: string) =>{
@@ -56,7 +59,10 @@ const useChatWebSocket = (channelId: string, serverId: string) =>{
       },
       onMessage: (msg) => {
         const data = JSON.parse(msg.data);
-        setNewMessage((prev_msg) => [...prev_msg, data.new_message]);
+        setNewMessage((prev_msg) => [
+          ...prev_msg,
+           data.new_message,
+        ]);
         setMessage("");
       },
       shouldReconnect: (closeEvent) => {

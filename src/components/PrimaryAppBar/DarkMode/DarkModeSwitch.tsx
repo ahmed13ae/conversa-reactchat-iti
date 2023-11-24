@@ -11,7 +11,7 @@ const DarkModeSwitch = () => {
   const colorMode = useContext(ColorModeContext);
   return (
     <>
-      <Brightness4Icon sx={{ marginRight: "6px", fontSize: "20px" }} />
+      <Brightness4Icon color="primary" sx={{ marginRight: "6px", fontSize: "20px" }} />
       <Typography variant="body2" sx={{ textTransform: "capitalize" }}>
         {theme.palette.mode} mode
       </Typography>

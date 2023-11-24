@@ -13,6 +13,7 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import { MEDIA_URL } from "../../config";
 import { Link } from "react-router-dom";
+import AddServerButton from "../../pages/AddServerButton";
 
 interface Server {
   id: number;
@@ -47,7 +48,13 @@ const PopularChannels: React.FC<Props> = ({ open }) => {
         }}
       >
         <Typography sx={{ display: open ? "block" : "none" }}>
-          Popular
+          <span style={{marginRight:'10px'}}>Popular</span>
+          <AddServerButton
+          onServerAdded={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
+
         </Typography>
       </Box>
       <List>

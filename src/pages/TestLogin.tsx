@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useAuthServiceContext } from "../context/AuthContext";
 import useAxiosWithInterceptor from "../helpers/jwtinterceptor";
+import Logout from "./template/Logout";
 
 const TestLogin = () => {
   const { isLoggedIn, logout } = useAuthServiceContext();
@@ -25,6 +26,7 @@ const TestLogin = () => {
     <>
       <div>{isLoggedIn.toString()}</div>
       <div>
+        <Logout/>
         <button onClick={logout}>Logout</button>
         <button onClick={getUserDetails}>Get User Details</button>
       </div>

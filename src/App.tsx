@@ -10,6 +10,8 @@ import ProtectedRoute from "./services/ProtectedRoute";
 import Register from "./pages/Register";
 import { MembershipProvider } from "./context/MemberContext";
 import MembershipCheck from "./components/Membership/MembershipCheck";
+// import AddServers from "./pages/addServers";
+import Welcome from "./pages/Welcome";
 
 const App = () => {
   return (
@@ -17,7 +19,7 @@ const App = () => {
       <AuthServiceProvider>
         <ToggleColorMode>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route
               path="/server/:serverId/:channelId?"
               element={
@@ -33,6 +35,10 @@ const App = () => {
             <Route path="/explore/:categoryName" element={<Explore />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Welcome />} />
+
+            {/* <Route path="/add-servers" Component={AddServers} /> */}
+
             <Route
               path="/testlogin"
               element={

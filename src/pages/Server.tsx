@@ -1,8 +1,8 @@
 import { Box, CssBaseline } from "@mui/material";
-import PrimaryAppBar from "./templates/PrimaryAppBar";
-import PrimaryDraw from "./templates/PrimaryDraw";
-import SecondaryDraw from "./templates/SecondaryDraw";
-import Main from "./templates/Main";
+import PrimaryAppBar from "./template/PrimaryAppBar";
+import PrimaryDraw from "./template/PrimaryDraw";
+import SecondaryDraw from "./template/SecondaryDraw";
+import Main from "./template/Main";
 import MessageInterface from "../components/Main/MessageInterface";
 import ServerChannels from "../components/SecondaryDraw/ServerChannels";
 import UserServers from "../components/PrimaryDraw/UserServers";

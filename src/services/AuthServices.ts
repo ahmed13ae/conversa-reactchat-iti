@@ -66,19 +66,31 @@ export function useAuthService(): AuthServiceProps {
         }
     }
 
-    const register = async (username: string, password: string) =>{
+    const register = async (username: string, password: string, email: string, image: File | null) => {
         try {
+            const formData = new FormData();
+            formData.append("username", username);
+            formData.append("password", password);
+            formData.append("email", email);
+            if (image) {
+                formData.append("profile_picture", image);
+            }
+    
             const response = await axios.post(
-                "http://127.0.0.1:8000/api/register/", {
-                    username,
-                    password,
-            }, { withCredentials: true }
+                "http://127.0.0.1:8000/api/register/",
+                formData,
+                {
+                    withCredentials: true,
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
             );
-            return response.status
+            return response.status;
         } catch (err: any) {
             return err.response.status;
-        }
-    }
+        }
+    }
 
 
     const logout = async () => {
