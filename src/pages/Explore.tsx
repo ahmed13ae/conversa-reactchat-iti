@@ -6,6 +6,7 @@ import Main from "./template/Main";
 import PopularChannels from "../components/PrimaryDraw/PopularChannels";
 import ExploreCategories from "../components/SecondaryDraw/ExploreCategories";
 import ExploreServers from "../components/Main/ExploreServers";
+import AddServerButton from "./AddServerButton";
 
 const Home = () => {
   return (
@@ -14,6 +15,11 @@ const Home = () => {
       <PrimaryAppBar />
       <PrimaryDraw>
         <PopularChannels open={false} />
+        <AddServerButton
+          onServerAdded={function (): void {
+            throw new Error("Function not implemented.");
+          }}
+        />
       </PrimaryDraw>
       <SecondaryDraw>
         <ExploreCategories />

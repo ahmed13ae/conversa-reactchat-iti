@@ -38,7 +38,7 @@ const JoinServerButton = () => {
 
   return (
     <>
-      ismember: {isUserMember.toString()}
+      {/* ismember: {isUserMember.toString()} */}
       {isUserMember ? (
         <button className="btn btn-outline-primary" onClick={handleLeaveServer}>Leave Server</button>
       ) : (

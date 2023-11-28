@@ -81,13 +81,15 @@ const ExploreServers = () => {
               ? `Channels talking about ${categoryName}`
               : "Check out some of our popular channels"}
           </Typography>
+          
+
         </Box>
 
         <Typography
           variant="h6"
           sx={{ pt: 6, pb: 1, fontWeight: 700, letterSpacing: "-1px" }}
         >
-          Recommended Channels
+          Recommended Channels 
         </Typography>
         <Grid container spacing={{ xs: 0, sm: 2 }}>
           {dataCRUD.map((item) => (

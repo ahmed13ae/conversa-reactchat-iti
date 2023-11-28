@@ -1,30 +1,27 @@
-// AddServerButton.tsx
+// AddChannelsButton.tsx
 import { useState, ChangeEvent, FormEvent } from "react";
-import { Button,Input, Modal, TextField, Tooltip } from "@mui/material";
+import { Button, Icon, Modal, TextField, Tooltip } from "@mui/material";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { AddCircle } from "@mui/icons-material";
-import { PhotoCamera } from "@mui/icons-material";
 
-interface ServerDetails {
+interface ChannelsDetails {
   name: string;
-  category: string;
-  member: number[];
-  banner: Blob | null; // Use Blob type for banner
+  server: number;
+  topic: string;
   owner: number;
   // Add other fields as needed
 }
 
-interface AddServerButtonProps {
+interface AddChannelsButtonProps {
   onServerAdded: () => void;
 }
 
-const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
+const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) => {
   const [open, setOpen] = useState(false);
-  const [serverDetails, setServerDetails] = useState<ServerDetails>({
+  const [ChannelsDetails, setChannelsDetails] = useState<ChannelsDetails>({
     name: "",
-    category: "",
-    member: [1],
-    banner: null,
+    server: 0,
+    topic: "default topic",
     owner: 1,
     // Add other fields as needed
   });
@@ -34,43 +31,47 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setServerDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
+    setChannelsDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
   const handleArrayInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setServerDetails((prevDetails) => ({
+    setChannelsDetails((prevDetails) => ({
       ...prevDetails,
       [name]: value.split(",").map((item) => item.trim()),
     }));
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setServerDetails((prevDetails) => ({
-        ...prevDetails,
-        banner: file,
-      }));
-    }
-  };
+//   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+//     const file = e.target.files?.[0];
+//     if (file) {
+//       setChannelsDetails((prevDetails) => ({
+//         ...prevDetails,
+//         banner: file,
+//       }));
+//     }
+//   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append("name", serverDetails.name);
-      formData.append("category", String(serverDetails.category));
-      formData.append("member", serverDetails.member.join(", "));
-      formData.append("owner", String(serverDetails.owner));
-      formData.append("banner", serverDetails.banner as Blob); // Make sure banner is a Blob type
+      formData.append("name", ChannelsDetails.name);
+      formData.append("server", String(ChannelsDetails.server));
+      formData.append("topic", String(ChannelsDetails.topic));
+      formData.append("owner", String(ChannelsDetails.owner));
+
+
+    //   formData.append("member", ChannelsDetails.member.join(", "));
+    //   formData.append("owner", String(ChannelsDetails.owner));
+    //   formData.append("banner", ChannelsDetails.banner as Blob); // Make sure banner is a Blob type
 
       const response: AxiosResponse = await axios.post(
-        "http://127.0.0.1:8000/api/server/",
+        "http://127.0.0.1:8000/api/server/channel/",
         formData
       );
 
-      console.log("Server added successfully:", response.data);
+      console.log("Channels added successfully:", response.data);
 
       handleClose();
       onServerAdded(); // Notify the parent component about the server addition
@@ -82,35 +83,11 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
       );
     }
   };
-  // const handleSubmit = async (e: FormEvent) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const response: AxiosResponse = await axios.post(
-  //       "http://127.0.0.1:8000/api/server/",
-  //       serverDetails
-  //     );
-
-  //     console.log("Server added successfully:", response.data);
-
-  //     handleClose();
-  //     onServerAdded(); // Notify the parent component about the server addition
-  //   } catch (error) {
-  //     const axiosError = error as AxiosError;
-  //     console.error(
-  //       "Error adding server:",
-  //       axiosError.response?.data || axiosError.message
-  //     );
-  //   }
-  // };
 
   return (
     <>
-      <Tooltip title="Add Servers" arrow>
-        <AddCircle
-          onClick={handleOpen}
-          sx={{ fontSize: 25, color: "black", marginLeft: "5px" }}
-        />
+      <Tooltip title="Add Channels" arrow>
+        <AddCircle onClick={handleOpen} sx={{ fontSize: 25, color: "#728bd4", marginLeft:'5px' }} />
       </Tooltip>
 
       <Modal open={open} onClose={handleClose}>
@@ -121,23 +98,23 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
             onSubmit={handleSubmit}
           >
             <TextField
-              label="Server Name"
+              label="Channels Name"
               name="name"
-              value={serverDetails.name}
+              value={ChannelsDetails.name}
               onChange={handleInputChange}
               InputProps={{
                 style: {
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
-                  color: "black",
+                  color: "white",
                   margin: "10px",
                 },
               }}
             />
             <TextField
-              label="Category"
-              name="category"
-              value={serverDetails.category}
+              label="Server"
+              name="server"
+              value={ChannelsDetails.server}
               onChange={handleInputChange}
               InputProps={{
                 style: {
@@ -154,13 +131,13 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               }}
             />
             <TextField
-              label="Members"
-              name="member"
-              value={serverDetails.member.join(", ")}
+              label="Topic"
+              name="topic"
+              value={ChannelsDetails.topic}
               onChange={handleArrayInputChange}
               InputProps={{
                 style: {
-                  // display:'none',//none
+                  display:'none',//none
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -169,13 +146,12 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               }}
               InputLabelProps={{
                 style: {
-                  // display:'none',//none
+                  display:'none',//none
                   color: "aliceblue", // Change the color of the label here
                 },
               }}
 
             />
-            {/* {File && <p>File selected: {File.name}</p>} */}
             {/* <input className="btn btn-outline"
               type="file"
               accept="image/*"
@@ -186,11 +162,11 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
             <TextField
               label="Owner"
               name="owner"
-              value={serverDetails.owner}
+              value={ChannelsDetails.owner}
               onChange={handleInputChange}
               InputProps={{
                 style: {
-                  // display:'none',//none
+                  
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -199,41 +175,18 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               }}
               InputLabelProps={{
                 style: {
-                  // display:'none',//none
+                  
                   color: "aliceblue", // Change the color of the label here
                 },
               }}
             />
-            <Input
-              type="file"
-              id="file-upload"
-              // accept="image/*"
-              inputProps={{ accept: "image/*" }}
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-            <label htmlFor="file-upload">
-              <Button
-                style={{
-                  marginLeft: "12px",
-                  backgroundColor: "#3a5cbf",
-                  color: "#fff",
-                }}
-                component="span"
-                startIcon={<PhotoCamera />}
-                variant="outlined"
-              >
-                Upload Picture
-              </Button>
-            </label>
-
             {/* Add other fields as needed */}
             <Button
               className="btn btn-outline-primary"
               sx={{ margin: "10px", backgroundColor: "primary" }}
               type="submit"
             >
-              Add Server
+              Add Channels
             </Button>
           </form>
         </div>
@@ -242,4 +195,4 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
   );
 };
 
-export default AddServerButton;
+export default AddChannelsButton;

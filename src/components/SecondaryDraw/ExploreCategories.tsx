@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { MEDIA_URL } from "../../config";
+import AddServerButton from "../../pages/AddServerButton";
 
 interface Category {
   id: number;
@@ -48,6 +49,7 @@ const ExploreCategories = () => {
         }}
       >
         Explore
+        
       </Box>
       <List sx={{ py: 0 }}>
         {dataCRUD.map((item) => (
@@ -58,7 +60,7 @@ const ExploreCategories = () => {
             dense={true}
           >
             <Link
-              to={`/explore/${item.name}`}
+              to={`/explore/${item.id}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <ListItemButton sx={{ minHeight: 48 }}>

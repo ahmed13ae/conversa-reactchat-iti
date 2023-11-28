@@ -32,7 +32,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/explore/:categoryName" element={<Explore />} />
+            <Route path="/explore/:id" element={<Explore />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<Welcome />} />

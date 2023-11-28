@@ -16,7 +16,6 @@ import ExploreCategories from "../../components/SecondaryDraw/ExploreCategories"
 import AccountButton from "../../components/PrimaryAppBar/AccountButton";
 import logo from "../../assets/Logo.png";
 import { useAuthServiceContext } from "../../context/AuthContext";
-import AddServerButton from "../AddServerButton";
 import axios from "axios";
 
 const PrimaryAppBar = () => {
@@ -153,8 +152,6 @@ const PrimaryAppBar = () => {
             </div>
           )}
 
-          {/* AddServerButton with the handleServerAdded function */}
-          <AddServerButton onServerAdded={handleServerAdded} />
 
         </Toolbar>
       </AppBar>
