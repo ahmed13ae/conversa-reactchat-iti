@@ -70,7 +70,7 @@ const Welcome: React.FC<WelcomeProps> = () => {
           >
             <Link to="/login">
               <div>
-                <LightButton>Login</LightButton>
+                <LightButton className="btn btn-outline-primary">Login</LightButton>
               </div>
             </Link>
           </div>

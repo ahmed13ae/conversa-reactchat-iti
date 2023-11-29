@@ -15,7 +15,8 @@ const Home = () => {
       <PrimaryAppBar />
       <PrimaryDraw>
         <PopularChannels open={false} />
-        <AddServerButton
+        <AddServerButton 
+        
           onServerAdded={function (): void {
             throw new Error("Function not implemented.");
           }}

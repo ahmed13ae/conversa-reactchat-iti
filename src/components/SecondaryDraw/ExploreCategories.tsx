@@ -13,7 +13,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import { MEDIA_URL } from "../../config";
-import AddServerButton from "../../pages/AddServerButton";
 
 interface Category {
   id: number;
@@ -25,10 +24,7 @@ interface Category {
 const ExploreCategories = () => {
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
-  const { dataCRUD, error, isLoading, fetchData } = useCrud<Category>(
-    [],
-    "/server/category/"
-  );
+  const { dataCRUD, fetchData } = useCrud<Category>([], "/server/category/");
 
   useEffect(() => {
     fetchData();
@@ -49,7 +45,6 @@ const ExploreCategories = () => {
         }}
       >
         Explore
-        
       </Box>
       <List sx={{ py: 0 }}>
         {dataCRUD.map((item) => (

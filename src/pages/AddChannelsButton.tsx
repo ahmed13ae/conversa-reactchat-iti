@@ -1,15 +1,14 @@
-// AddChannelsButton.tsx
 import { useState, ChangeEvent, FormEvent } from "react";
-import { Button, Icon, Modal, TextField, Tooltip } from "@mui/material";
+import { Button, Modal, TextField, Tooltip } from "@mui/material";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { AddCircle } from "@mui/icons-material";
+import { useParams } from "react-router-dom";
 
 interface ChannelsDetails {
   name: string;
   server: number;
   topic: string;
   owner: number;
-  // Add other fields as needed
 }
 
 interface AddChannelsButtonProps {
@@ -17,13 +16,19 @@ interface AddChannelsButtonProps {
 }
 
 const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) => {
+  const { serverId } = useParams<{ serverId?: string }>();
   const [open, setOpen] = useState(false);
-  const [ChannelsDetails, setChannelsDetails] = useState<ChannelsDetails>({
+
+  const currentUserInfo = {
+    userId: localStorage.getItem("user_id"),
+    username: localStorage.getItem("username"),
+  };
+
+  const [channelsDetails, setChannelsDetails] = useState<ChannelsDetails>({
     name: "",
-    server: 0,
+    server: serverId ? Number(serverId) : 1,
     topic: "default topic",
-    owner: 1,
-    // Add other fields as needed
+    owner: currentUserInfo.userId ? Number(currentUserInfo.userId) : 1,
   });
 
   const handleOpen = () => setOpen(true);
@@ -34,38 +39,15 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
     setChannelsDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
-  const handleArrayInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setChannelsDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value.split(",").map((item) => item.trim()),
-    }));
-  };
-
-//   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     const file = e.target.files?.[0];
-//     if (file) {
-//       setChannelsDetails((prevDetails) => ({
-//         ...prevDetails,
-//         banner: file,
-//       }));
-//     }
-//   };
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
       const formData = new FormData();
-      formData.append("name", ChannelsDetails.name);
-      formData.append("server", String(ChannelsDetails.server));
-      formData.append("topic", String(ChannelsDetails.topic));
-      formData.append("owner", String(ChannelsDetails.owner));
-
-
-    //   formData.append("member", ChannelsDetails.member.join(", "));
-    //   formData.append("owner", String(ChannelsDetails.owner));
-    //   formData.append("banner", ChannelsDetails.banner as Blob); // Make sure banner is a Blob type
-
+      formData.append("name", channelsDetails.name);
+      formData.append("server", String(channelsDetails.server));
+      formData.append("topic", String(channelsDetails.topic));
+      formData.append("owner", String(channelsDetails.owner));
       const response: AxiosResponse = await axios.post(
         "http://127.0.0.1:8000/api/server/channel/",
         formData
@@ -74,7 +56,7 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
       console.log("Channels added successfully:", response.data);
 
       handleClose();
-      onServerAdded(); // Notify the parent component about the server addition
+      onServerAdded();
     } catch (error) {
       const axiosError = error as AxiosError;
       console.error(
@@ -100,7 +82,7 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
             <TextField
               label="Channels Name"
               name="name"
-              value={ChannelsDetails.name}
+              value={channelsDetails.name}
               onChange={handleInputChange}
               InputProps={{
                 style: {
@@ -114,7 +96,7 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
             <TextField
               label="Server"
               name="server"
-              value={ChannelsDetails.server}
+              value={channelsDetails.server}
               onChange={handleInputChange}
               InputProps={{
                 style: {
@@ -126,47 +108,18 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
               }}
               InputLabelProps={{
                 style: {
-                  color: "white", // Change the color of the label here
+                  color: "white",
                 },
               }}
             />
             <TextField
               label="Topic"
               name="topic"
-              value={ChannelsDetails.topic}
-              onChange={handleArrayInputChange}
-              InputProps={{
-                style: {
-                  display:'none',//none
-                  backgroundColor: "#1E1F22",
-                  borderRadius: "10px",
-                  color: "white",
-                  margin: "10px",
-                },
-              }}
-              InputLabelProps={{
-                style: {
-                  display:'none',//none
-                  color: "aliceblue", // Change the color of the label here
-                },
-              }}
-
-            />
-            {/* <input className="btn btn-outline"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              style={{ margin: "10px", color:'white' }}
-            /> */}
-
-            <TextField
-              label="Owner"
-              name="owner"
-              value={ChannelsDetails.owner}
+              value={channelsDetails.topic}
               onChange={handleInputChange}
               InputProps={{
                 style: {
-                  
+                  display:'none',//none
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -175,12 +128,31 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
               }}
               InputLabelProps={{
                 style: {
-                  
-                  color: "aliceblue", // Change the color of the label here
+                  display:'none',
+                  color: "aliceblue",
                 },
               }}
             />
-            {/* Add other fields as needed */}
+            
+            <TextField
+              label="Owner"
+              name="owner"
+              value={channelsDetails.owner}
+              onChange={handleInputChange}
+              InputProps={{
+                style: {
+                  backgroundColor: "#1E1F22",
+                  borderRadius: "10px",
+                  color: "white",
+                  margin: "10px",
+                },
+              }}
+              InputLabelProps={{
+                style: {
+                  color: "aliceblue",
+                },
+              }}
+            />
             <Button
               className="btn btn-outline-primary"
               sx={{ margin: "10px", backgroundColor: "primary" }}

@@ -5,7 +5,6 @@ import {
   ListItemText,
   Box,
   useTheme,
-  ListItemIcon,
   Typography,
 } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
