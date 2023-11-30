@@ -42,11 +42,11 @@ export const createMuiTheme = (mode: "light" | "dark") => {
       },
     },
     primaryAppBar: {
-      height: 50,
+      height: 60,
     },
     primaryDraw: {
       width: 240,
-      closed: 70,
+      closed: 60,
     },
     secondaryDraw: {
       width: 240,

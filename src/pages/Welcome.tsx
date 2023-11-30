@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import { Button } from "react-bootstrap";
 import { Button, styled } from "@mui/material";
 
-import logo from "../../src/assets/Logo.png";
+import logo1 from "../../src/assets/Logo.png";
 import chat from "../../src/assets/ys1l0kxg.png";
 import welcome from "../../src/assets/bg_welcome.png";
 
@@ -51,14 +50,14 @@ const Welcome: React.FC<WelcomeProps> = () => {
             width: "100%",
           }}
         >
-          <Link style={{ color: "#fff" }} to="home" className="navbar-brand">
+<Link style={{ color: "#fff" }} to="home" className="navbar-brand">
             {" "}
             <img
-              style={{ width: "200px", height: "40px" }}
-              src={logo}
+              style={{ width: "300px", height: "100px" }}
+              src={logo1}
               alt=""
             />{" "}
-          </Link>
+          </Link>
 
           <div
             style={{

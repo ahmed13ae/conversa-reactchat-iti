@@ -14,7 +14,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import ExploreCategories from "../../components/SecondaryDraw/ExploreCategories";
 import AccountButton from "../../components/PrimaryAppBar/AccountButton";
-import logo from "../../assets/Logo.png";
+import logo from "../../assets/logo2.png";
 import { useAuthServiceContext } from "../../context/AuthContext";
 import axios from "axios";
 
@@ -122,11 +122,12 @@ const PrimaryAppBar = () => {
               <Link>
                 {" "}
                 <img
-                  style={{ width: "200px", height: "40px", paddingTop: "3px" }}
+                  style={{ width: "200px", height: "50px", paddingTop: "4px" }}
                   src={logo}
                   alt=""
                 />{" "}
-              </Link>
+              
+              </Link>{" "}
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1 }}></Box>
@@ -151,8 +152,6 @@ const PrimaryAppBar = () => {
               </Button>
             </div>
           )}
-
-
         </Toolbar>
       </AppBar>
     </>

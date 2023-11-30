@@ -76,7 +76,7 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
         <div>
           <form
             encType="multipart/form-data"
-            className="container d-flex justify-content-center flex-column vh-100 w-50 my-5 bg-dark"
+            className="container d-flex justify-content-center flex-column  w-50 my-5 bg-dark"style={{height:'40vh', borderRadius:'10px'}}
             onSubmit={handleSubmit}
           >
             <TextField
@@ -100,6 +100,7 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
               onChange={handleInputChange}
               InputProps={{
                 style: {
+                  display:'none',
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -108,6 +109,7 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
               }}
               InputLabelProps={{
                 style: {
+                  display:'none',
                   color: "white",
                 },
               }}
@@ -145,11 +147,13 @@ const AddChannelsButton: React.FC<AddChannelsButtonProps> = ({ onServerAdded }) 
                   borderRadius: "10px",
                   color: "white",
                   margin: "10px",
+                  display:'none'
                 },
               }}
               InputLabelProps={{
                 style: {
                   color: "aliceblue",
+                  display:'none'
                 },
               }}
             />

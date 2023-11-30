@@ -106,7 +106,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
         <div>
           <form
             encType="multipart/form-data"
-            className="container d-flex justify-content-center flex-column vh-100 w-50 my-5 bg-dark"
+            className="container d-flex justify-content-center flex-column  w-50 my-5 bg-dark" style={{height:'40vh', borderRadius:'10px'}}
             onSubmit={handleSubmit}
           >
             <TextField
@@ -130,6 +130,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               onChange={handleInputChange}
               InputProps={{
                 style: {
+                  display:'none',
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -138,6 +139,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               }}
               InputLabelProps={{
                 style: {
+                  display:'none',
                   color: "white", // Change the color of the label here
                 },
               }}
@@ -149,7 +151,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               onChange={handleArrayInputChange}
               InputProps={{
                 style: {
-                  // display:'none',//none
+                  display:'none',//none
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -158,7 +160,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               }}
               InputLabelProps={{
                 style: {
-                  // display:'none',//none
+                  display:'none',//none
                   color: "aliceblue", // Change the color of the label here
                 },
               }}
@@ -173,7 +175,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               onChange={handleInputChange}
               InputProps={{
                 style: {
-                  // display:'none',//none
+                  display:'none',//none
                   backgroundColor: "#1E1F22",
                   borderRadius: "10px",
                   color: "white",
@@ -182,7 +184,7 @@ const AddServerButton: React.FC<AddServerButtonProps> = ({ onServerAdded }) => {
               }}
               InputLabelProps={{
                 style: {
-                  // display:'none',//none
+                  display:'none',//none
                   color: "aliceblue", // Change the color of the label here
                 },
               }}
